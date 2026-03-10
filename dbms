@@ -1,0 +1,160 @@
+
+
+CREATE TABLE Departments (
+    department_id INT IDENTITY(1,1) PRIMARY KEY, -- Auto-generates 1, 2, 3...
+    department_name VARCHAR(100) NOT NULL
+);
+
+-- 2. Insert ONLY the names
+INSERT INTO Departments (department_name)
+VALUES 
+    ('Cardiology'),
+    ('Orthopaedics'),
+    ('Neurology'),
+    ('Pathology'),
+    ('Dermatology'),
+    ('ENT'),
+    ('Radiology'),
+    ('Oncology'),
+    ('Pediatrics'),
+    ('General Medicine');
+
+-- 3. Verify the IDs are no longer NULL
+SELECT * FROM Departments;
+
+CREATE TABLE Doctors(
+doctor_id INT IDENTITY PRIMARY KEY,
+doctor_name VARCHAR(100),
+specialization VARCHAR(100),
+consultation_fee DECIMAL(10,2),
+department_id INT,
+
+FOREIGN KEY(department_id)
+REFERENCES Departments(department_id)
+);
+
+CREATE TABLE DoctorSchedule(
+schedule_id INT IDENTITY PRIMARY KEY,
+doctor_id INT,
+day_of_week VARCHAR(10),
+start_time TIME,
+end_time TIME,
+
+FOREIGN KEY(doctor_id)
+REFERENCES Doctors(doctor_id)
+);
+
+CREATE TABLE Patients(
+patient_id INT IDENTITY PRIMARY KEY,
+patient_name VARCHAR(100),
+dob DATE,
+gender VARCHAR(10),
+phone VARCHAR(15),
+address VARCHAR(200),
+insurance_id INT
+);
+
+CREATE TABLE InsurancePolicies(
+policy_id INT IDENTITY PRIMARY KEY,
+policy_name VARCHAR(100),
+coverage_percent INT,
+yearly_limit DECIMAL(10,2)
+);
+
+CREATE TABLE Appointments(
+appointment_id INT IDENTITY PRIMARY KEY,
+patient_id INT,
+doctor_id INT,
+appointment_date DATE,
+appointment_time TIME,
+status VARCHAR(20),
+
+FOREIGN KEY(patient_id) REFERENCES Patients(patient_id),
+FOREIGN KEY(doctor_id) REFERENCES Doctors(doctor_id),
+
+CHECK(status IN ('Scheduled','Completed','Cancelled'))
+);
+
+CREATE TABLE MedicalRecords(
+record_id INT IDENTITY PRIMARY KEY,
+appointment_id INT,
+diagnosis VARCHAR(200),
+treatment_plan VARCHAR(200),
+follow_up_required BIT DEFAULT 0,
+
+FOREIGN KEY(appointment_id)
+REFERENCES Appointments(appointment_id)
+);
+
+
+CREATE TABLE Medicines(
+medicine_id INT IDENTITY PRIMARY KEY,
+medicine_name VARCHAR(100),
+price DECIMAL(10,2)
+);
+
+CREATE TABLE Prescriptions(
+prescription_id INT IDENTITY PRIMARY KEY,
+record_id INT,
+medicine_id INT,
+dosage VARCHAR(50),
+duration_days INT,
+quantity INT,
+
+FOREIGN KEY(record_id)
+REFERENCES MedicalRecords(record_id),
+
+FOREIGN KEY(medicine_id)
+REFERENCES Medicines(medicine_id)
+);
+
+
+CREATE TABLE LabTests(
+test_id INT IDENTITY PRIMARY KEY,
+test_name VARCHAR(100),
+test_cost DECIMAL(10,2)
+);
+
+
+
+CREATE TABLE LabOrders(
+order_id INT IDENTITY PRIMARY KEY,
+record_id INT,
+test_id INT,
+result VARCHAR(200),
+is_abnormal BIT,
+
+FOREIGN KEY(record_id)
+REFERENCES MedicalRecords(record_id),
+
+FOREIGN KEY(test_id)
+REFERENCES LabTests(test_id)
+);
+
+
+CREATE TABLE Billing(
+bill_id INT IDENTITY PRIMARY KEY,
+appointment_id INT,
+consultation_fee DECIMAL(10,2),
+medicine_cost DECIMAL(10,2),
+lab_cost DECIMAL(10,2),
+insurance_discount DECIMAL(10,2),
+gst_amount DECIMAL(10,2),
+final_amount DECIMAL(10,2),
+payment_status VARCHAR(20),
+
+FOREIGN KEY(appointment_id)
+REFERENCES Appointments(appointment_id)
+);
+
+
+CREATE TABLE Payments(
+payment_id INT IDENTITY PRIMARY KEY,
+bill_id INT,
+payment_date DATE,
+payment_method VARCHAR(50),
+amount DECIMAL(10,2),
+
+FOREIGN KEY(bill_id)
+REFERENCES Billing(bill_id)
+);
