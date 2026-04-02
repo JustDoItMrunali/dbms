@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SarvaShop - Access Your Account</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --pink: #ff6b81;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --border: #ececec;
+            --bg-soft: #fdf0ee;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-soft);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* --- AUTH CARD --- */
+        .auth-card {
+            background: #fff;
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(255, 107, 129, 0.1);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .logo span { color: var(--pink); }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        p.subtitle {
+            color: var(--text-light);
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        /* --- FORM STYLES --- */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            color: var(--text-dark);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 16px;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            outline: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--pink);
+            box-shadow: 0 0 0 4px rgba(255, 107, 129, 0.1);
+        }
+
+        /* --- BUTTONS --- */
+        .btn-auth {
+            width: 100%;
+            background: var(--pink);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-auth:hover {
+            background: var(--text-dark);
+            transform: translateY(-2px);
+        }
+
+        .social-login {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            color: var(--text-dark);
+        }
+
+        .social-btn:hover {
+            background: #f8f8f8;
+            border-color: var(--pink);
+            color: var(--pink);
+        }
+
+        .toggle-text {
+            margin-top: 25px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .toggle-text a {
+            color: var(--pink);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .toggle-text a:hover { text-decoration: underline; }
+
+        /* Hidden class for toggling */
+        .hidden { display: none; }
+
+        /* Forgot password link */
+        .forgot-pass {
+            display: block;
+            text-align: right;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--pink);
+            margin-top: 8px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-card">
+        <div class="logo">Sarva<span>Shop</span></div>
+
+        <div id="login-form">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Enter your details to access your account</p>
+
+            <form>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="far fa-envelope"></i>
+                        <input type="email" placeholder="name@example.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                    <a href="#" class="forgot-pass">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-auth">Login to Account</button>
+            </form>
+
+            <div class="toggle-text">
+                Don't have an account? <a href="javascript:void(0)" onclick="toggleForm()">Register Now</a>
+            </div>
+        </div>
+
+        <div id="register-form" class="hidden">
+            <h2>Create Account</h2>
+            <p class="subtitle">Join SarvaShop and start shopping everything</p>
+
+            <form>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <div class="input-wrapper">
+                        <i class="far fa-user"></i>
+                        <input type="text" placeholder="John Doe" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="far fa-envelope"></i>
+                        <input type="email" placeholder="name@example.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Create Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-auth">Create Account</button>
+            </form>
+
+            <div class="toggle-text">
+                Already have an account? <a href="javascript:void(0)" onclick="toggleForm()">Login here</a>
+            </div>
+        </div>
+
+        <div class="social-login">
+            <div class="social-btn"><i class="fab fa-google"></i></div>
+            <div class="social-btn"><i class="fab fa-facebook-f"></i></div>
+            <div class="social-btn"><i class="fab fa-apple"></i></div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm() {
+            const login = document.getElementById('login-form');
+            const register = document.getElementById('register-form');
+            
+            login.classList.toggle('hidden');
+            register.classList.toggle('hidden');
+        }
+    </script>
+
+</body>
+</html>
